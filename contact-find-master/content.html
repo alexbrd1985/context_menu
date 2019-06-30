@@ -1,0 +1,94 @@
+<div class="menu_custom_context">
+    <ul class="menu-options">
+        <li value="body" class="menu-option-cust" onclick="inject(this.getAttribute('value'))">Text</li>
+        <li value="Roman Zaikin" class="menu-option-cust" onclick="inject(this.getAttribute('value'))">Roman Zaikin</li>
+        <li value="rz@inovitvideo.com" class="menu-option-cust" onclick="inject(this.getAttribute('value'))">rz@inovitvideo.com</li>
+        <li value="+1 8425-449-6820" class="menu-option-cust" onclick="inject(this.getAttribute('value'))">+1 8425-449-6820</li>
+        <li value="Inovit Animation Studio" class="menu-option-cust" onclick="inject(this.getAttribute('value'))">Inovit Animation Studio</li>
+        <li value="Irvine" class="menu-option-cust" onclick="inject(this.getAttribute('value'))">Irvine</li>
+    </ul>
+</div>
+
+<script>
+    const menu = document.querySelector(".menu_custom_context");
+    let menuVisible = false;
+    var elementTarget = null;
+
+    const toggleMenu = command => {
+        menu.style.display = command === "show" ? "block" : "none";
+        menuVisible = !menuVisible;
+    };
+
+    const setPosition = ({ top, left }) => {
+        menu.style.left = `${left}px`;
+        menu.style.top = `${top}px`;
+        toggleMenu("show");
+    };
+
+    window.addEventListener("click", e => {
+        if(menuVisible)toggleMenu("hide");
+    });
+
+    window.addEventListener("contextmenu", e => {
+        e.preventDefault();
+        const origin = {
+            left: e.clientX,
+            top: e.clientY
+        };
+        elementTarget = e;
+        setPosition(origin);
+        return false;
+    });
+
+    function inject(text) {
+        if (text === "body"){
+            elementTarget.target.value = 'Hi.\nMy name is Roman from \"Inovit\" animation studio.\n\nOur studio creates professional 2D animation explainer videos about services/products that help to answer questions that your prospects or clients might have, such as How it works?, What for?, What are the main benefits etc.\n\nI’d like to speak to someone from your company who is responsible for these kinds of decisions.\n\nPlease, let me know if you are interested in our services and I will send you our portfolio. Or we can simply set up a short phone call.\n\nLooking forward to your response.\n\nBest regards,\nRoman Zaikin .';
+        }else {
+            elementTarget.target.value = text;
+        }
+    }
+</script>
+
+<style>
+    .menu_custom_context {
+        width: max-content;
+        z-index: 1000000;
+        box-shadow: 0 4px 5px 3px rgba(0, 0, 0, 0.2);
+        position: fixed;
+        display: none;
+        transition: 0.2s display ease-in;
+        background: white;
+    }
+
+    ul.menu-options {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        width: 200px;
+        background-color: #f1f1f1;
+        border: 1px solid #555;
+    }
+
+    li.menu-option-cust {
+        text-align: center;
+        border-bottom: 1px solid #555;
+        display: block;
+        color: #000;
+        padding: 8px 16px;
+        text-decoration: none;
+    }
+
+    li.menu-option-cust:last-child {
+        border-bottom: none;
+    }
+
+    li.menu-option-cust a.active {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    li.menu-option-cust:hover:not(.active) {
+        background-color: #555;
+        color: white;
+    }
+</style>
