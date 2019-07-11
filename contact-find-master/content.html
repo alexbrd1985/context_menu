@@ -3,13 +3,28 @@
         <li value="body" class="menu-option-cust" onclick="inject(this.getAttribute('value'))">Text</li>
         <li value="Roman Zaikin" class="menu-option-cust" onclick="inject(this.getAttribute('value'))">Roman Zaikin</li>
         <li value="rz@inovitvideo.com" class="menu-option-cust" onclick="inject(this.getAttribute('value'))">rz@inovitvideo.com</li>
-        <li value="+1 8425-449-6820" class="menu-option-cust" onclick="inject(this.getAttribute('value'))">+1 8425-449-6820</li>
+        <li value="+1 84254496820" class="menu-option-cust" onclick="inject(this.getAttribute('value'))">+1 8425-449-6820</li>
         <li value="Inovit Animation Studio" class="menu-option-cust" onclick="inject(this.getAttribute('value'))">Inovit Animation Studio</li>
         <li value="Irvine" class="menu-option-cust" onclick="inject(this.getAttribute('value'))">Irvine</li>
     </ul>
 </div>
 
 <script>
+
+    document.addEventListener("keyup", e => {
+        if (e.which === 44) {
+            console.log(window.location.href);
+            var newDiv = document.createElement("div");
+            newDiv.classList.add('moved_element','pullDown');
+
+            newDiv.innerHTML = "<h1>" + window.location.href + "</h1>";
+
+            // добавляем только что созданый элемент в дерево DOM
+            var my_div = document.getElementsByClassName("menu_custom_context")[0];
+            document.body.insertBefore(newDiv, my_div);
+        }
+    } );
+
     const menu = document.querySelector(".menu_custom_context");
     let menuVisible = false;
     var elementTarget = null;
@@ -50,6 +65,74 @@
 </script>
 
 <style>
+    .moved_element {
+        position: fixed;
+        bottom: 0px;
+        left: 100px;
+        text-shadow: 1px 1px 2px black, 0 0 1em black;
+    }
+    .pullDown{
+        animation-name: pullDown;
+        -webkit-animation-name: pullDown;
+
+        animation-duration: 3s;
+        -webkit-animation-duration: 3s;
+
+        animation-timing-function: ease-out;
+        -webkit-animation-timing-function: ease-out;
+
+        transform-origin: 50% 0%;
+        -ms-transform-origin: 50% 0%;
+        -webkit-transform-origin: 50% 0%;
+    }
+
+    @keyframes pullDown {
+        0% {
+            transform: scaleY(0.1);
+        }
+        40% {
+            transform: scaleY(1.02);
+        }
+        60% {
+            transform: scaleY(0.98);
+        }
+        80% {
+            transform: scaleY(1.01);
+        }
+        100% {
+            transform: scaleY(0.98);
+        }
+        80% {
+            transform: scaleY(1.01);
+        }
+        100% {
+            transform: scaleY(1);
+        }
+    }
+
+    @-webkit-keyframes pullDown {
+        0% {
+            -webkit-transform: scaleY(0.1);
+        }
+        40% {
+            -webkit-transform: scaleY(1.02);
+        }
+        60% {
+            -webkit-transform: scaleY(0.98);
+        }
+        80% {
+            -webkit-transform: scaleY(1.01);
+        }
+        100% {
+            -webkit-transform: scaleY(0.98);
+        }
+        80% {
+            -webkit-transform: scaleY(1.01);
+        }
+        100% {
+            -webkit-transform: scaleY(1);
+        }
+    }
     .menu_custom_context {
         width: max-content;
         z-index: 1000000;
@@ -70,6 +153,7 @@
     }
 
     li.menu-option-cust {
+        cursor: pointer;
         text-align: center;
         border-bottom: 1px solid #555;
         display: block;
