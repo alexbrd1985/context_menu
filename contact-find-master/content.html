@@ -17,7 +17,7 @@
             var newDiv = document.createElement("div");
             newDiv.classList.add('moved_element','pullDown');
 
-            newDiv.innerHTML = "<h1>" + window.location.href + "</h1>";
+            newDiv.innerHTML = window.location.href;
 
             // добавляем только что созданый элемент в дерево DOM
             var my_div = document.getElementsByClassName("menu_custom_context")[0];
@@ -66,8 +66,9 @@
 
 <style>
     .moved_element {
+        font-size: 40px;
         position: fixed;
-        bottom: 0px;
+        bottom: 100px;
         left: 100px;
         text-shadow: 1px 1px 2px black, 0 0 1em black;
     }
