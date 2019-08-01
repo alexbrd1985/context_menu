@@ -11,20 +11,6 @@
 
 <script>
 
-    document.addEventListener("keyup", e => {
-        if (e.which === 44) {
-            console.log(window.location.href);
-            var newDiv = document.createElement("div");
-            newDiv.classList.add('moved_element','pullDown');
-
-            newDiv.innerHTML = window.location.href;
-
-            // добавляем только что созданый элемент в дерево DOM
-            var my_div = document.getElementsByClassName("menu_custom_context")[0];
-            document.body.insertBefore(newDiv, my_div);
-        }
-    } );
-
     const menu = document.querySelector(".menu_custom_context");
     let menuVisible = false;
     var elementTarget = null;
@@ -77,27 +63,7 @@
 </script>
 
 <style>
-    .moved_element {
-        font-size: 40px;
-        position: fixed;
-        bottom: 100px;
-        left: 100px;
-        text-shadow: 1px 1px 2px black, 0 0 1em black;
-    }
-    .pullDown{
-        animation-name: pullDown;
-        -webkit-animation-name: pullDown;
 
-        animation-duration: 3s;
-        -webkit-animation-duration: 3s;
-
-        animation-timing-function: ease-out;
-        -webkit-animation-timing-function: ease-out;
-
-        transform-origin: 50% 0%;
-        -ms-transform-origin: 50% 0%;
-        -webkit-transform-origin: 50% 0%;
-    }
 
     @keyframes pullDown {
         0% {
