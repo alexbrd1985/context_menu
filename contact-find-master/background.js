@@ -8,7 +8,9 @@
 // });
 
 // Called when the user clicks on the browser action.
-// if (!localStorage.getItem("list_url"))localStorage.setItem("list_url", []);
+
+updateCount();
+
 chrome.browserAction.onClicked.addListener(function(tab) {
     // Send a message to the active tab
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
@@ -20,11 +22,26 @@ chrome.browserAction.onClicked.addListener(function(tab) {
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     if (request.method == "addUrl"){
         var list = localStorage.getItem("list_url");
-        localStorage.setItem("list_url", JSON.stringify(request.key));
+        if (!list)
+            {list = [request.key]}
+        else{
+            list = JSON.parse(list).concat(request.key);
+        }
+        // list = list.concat(request.key);
+        localStorage.setItem("list_url", JSON.stringify(list));
 
         console.log(list);
-        sendResponse({data: JSON.parse(list)});
+        sendResponse({data: list});
+        updateCount();
     }
     else
         sendResponse({data:{}}); // snub them.
 });
+
+function updateCount() {
+    let count = localStorage.getItem("list_url");
+    if (count){
+        count = JSON.parse(count).length;
+        chrome.browserAction.setBadgeText({text: count.toString()});
+    }
+}

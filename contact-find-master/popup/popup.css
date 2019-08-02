@@ -1,0 +1,10 @@
+#list_urls {
+    margin: 10px;
+    height: 400px;
+    width: 500px;
+    white-space: nowrap;
+}
+
+button#rst_btn {
+    margin-bottom: 10px;
+}

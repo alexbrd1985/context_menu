@@ -1,12 +1,19 @@
-document.addEventListener("onLoad", e => {
+document.addEventListener("DOMContentLoaded", ready);
 
+function  ready(){
+    document.getElementById("rst_btn").onclick = reset_list;
+    var list_data = localStorage.getItem("list_url");
+    if (list_data){
+        list_data = JSON.parse(list_data);
         var list = document.querySelector("textarea#list_urls");
-        list.
+        list.value = list_data.join('\n');
+    }else{
+        chrome.browserAction.setBadgeText({text: "0"});
+    }
+}
 
-        newDiv.innerHTML = window.location.href;
-
-        // добавляем только что созданый элемент в дерево DOM
-        var my_div = document.getElementsByClassName("menu_custom_context")[0];
-        document.body.insertBefore(newDiv, my_div);
-
-} );
+function reset_list() {
+    localStorage.setItem("list_url", []);
+    chrome.browserAction.setBadgeText({text: "0"});
+    document.querySelector("textarea#list_urls").value = "";
+}
