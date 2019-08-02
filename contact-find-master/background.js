@@ -8,7 +8,7 @@
 // });
 
 // Called when the user clicks on the browser action.
-
+var current_url;
 updateCount();
 
 chrome.browserAction.onClicked.addListener(function(tab) {
@@ -25,17 +25,24 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         if (!list)
             {list = [request.key]}
         else{
-            list = JSON.parse(list).concat(request.key);
+            if (JSON.parse(list)[(JSON.parse(list)).length - 1] != request.key) {
+                list = JSON.parse(list).concat(request.key);
+            }else{
+                list = JSON.parse(list);
+            }
         }
         // list = list.concat(request.key);
         localStorage.setItem("list_url", JSON.stringify(list));
 
-        console.log(list);
         sendResponse({data: list});
         updateCount();
     }
     else
         sendResponse({data:{}}); // snub them.
+});
+
+chrome.tabs.onActiveChanged.addListener(function (){
+    updateCount();
 });
 
 function updateCount() {
@@ -44,4 +51,23 @@ function updateCount() {
         count = JSON.parse(count).length;
         chrome.browserAction.setBadgeText({text: count.toString()});
     }
+    chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, function (tabs) {
+        current_url = tabs[0].url;
+        if (inList()) {
+            chrome.browserAction.setBadgeBackgroundColor({color: "green"})
+        }else {
+            chrome.browserAction.setBadgeBackgroundColor({color: "red"})
+        }
+    });
+}
+
+function inList() {
+    let list = localStorage.getItem("list_url");
+    if (list){
+        if (JSON.parse(list).includes(current_url)) {
+            return true;
+        }else{
+            return false;
+        }
+    }else{return false}
 }

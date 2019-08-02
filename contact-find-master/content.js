@@ -13,8 +13,6 @@ document.addEventListener("keyup", e => {
         var my_div = document.getElementsByClassName("menu_custom_context")[0];
         document.body.insertBefore(newDiv, my_div);
 
-        chrome.runtime.sendMessage({method: "addUrl", key: window.location.href}, function (response) {
-            console.log(response.data);
-        });
+        chrome.runtime.sendMessage({method: "addUrl", key: window.location.href}, function (response) {});
     }
 });
