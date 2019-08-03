@@ -6,7 +6,7 @@ function  ready(){
     if (list_data){
         list_data = JSON.parse(list_data);
         var list = document.querySelector("textarea#list_urls");
-        list.value = list_data.join('\n');
+        list.value = list_data.join('\n').replace( /\?auto_find=true/g, "" );
     }else{
         chrome.browserAction.setBadgeText({text: "0"});
     }

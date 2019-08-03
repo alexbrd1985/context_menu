@@ -7,6 +7,8 @@
     z-index: 1000000000000000;
 }
 .pullDown{
+    padding: 20px;
+    background: cornsilk;
     animation-name: pullDown;
     -webkit-animation-name: pullDown;
 
